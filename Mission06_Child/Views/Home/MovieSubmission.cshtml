@@ -6,49 +6,86 @@
 
 @model Movie
 
-<h1> Add a Movie </h1>
+<div class="container mt-4">
+    <h2 class="mb-3">@(Model.MovieId == 0 ? "Add a Movie" : "Edit Movie")</h2>
 
-<form method="post">
-    <label asp-for="Category">Category: </label>
-    <input asp-for="Category" />
-    <br />
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
 
-    <label asp-for="Title">Title: </label>
-    <input asp-for="Title" />
-    <br />
+    <form method="post">
+        <input type="hidden" asp-for="MovieId" />
 
-    <label asp-for="Year">Year: </label>
-    <input asp-for="Year" />
-    <br />
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <label asp-for="CategoryId" class="form-label">Category</label>
+                <select asp-for="CategoryId" class="form-select form-select-sm">
+                    <option value="">Select a Category</option>
+                    @foreach (var cat in ViewBag.Categories)
+                    {
+                        <option value="@cat.CategoryId">@cat.CategoryName</option>
+                    }
+                </select>
+            </div>
 
-    <label asp-for="Director">Director: </label>
-    <input asp-for="Director" />
-    <br />
+            <div class="col-md-6 mb-2">
+                <label asp-for="Title" class="form-label">Title</label>
+                <input asp-for="Title" class="form-control form-control-sm" />
+            </div>
+        </div>
 
-    <label asp-for="Rating">Rating: </label>
-    <select asp-for="Rating">
-        <option value="G"> G</option>
-        <option value="PG"> PG</option>
-        <option value="PG-13"> PG-13</option>
-        <option value="R"> R</option>
-    </select>
-    <br />
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <label asp-for="Year" class="form-label">Year</label>
+                <input asp-for="Year" class="form-control form-control-sm" type="number" />
+            </div>
 
-    <label asp-for="Edited">Edited?</label>
-    <select asp-for="Edited">
-        <option value="true"> Yes</option>
-        <option value="false"> No</option>
-    </select>
-    <br />
+            <div class="col-md-4 mb-2">
+                <label asp-for="Director" class="form-label">Director</label>
+                <input asp-for="Director" class="form-control form-control-sm" />
+            </div>
 
-    <label asp-for="LentTo">Lent To: </label>
-    <input asp-for="LentTo" />
-    <br />
+            <div class="col-md-4 mb-2">
+                <label asp-for="Rating" class="form-label">Rating</label>
+                <select asp-for="Rating" class="form-select form-select-sm">
+                    <option value="">Select Rating</option>
+                    <option value="G">G</option>
+                    <option value="PG">PG</option>
+                    <option value="PG-13">PG-13</option>
+                    <option value="R">R</option>
+                </select>
+            </div>
+        </div>
 
-    <label asp-for="Notes">Notes: </label>
-    <input asp-for="Notes" maxlength="25" />
-    <br />
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <label asp-for="Edited" class="form-label">Edited?</label>
+                <select asp-for="Edited" class="form-select form-select-sm">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
 
-    <button type="submit">Submit</button>
-</form>
+            <div class="col-md-3 mb-2">
+                <label asp-for="CopiedToPlex" class="form-label">Copied to Plex?</label>
+                <select asp-for="CopiedToPlex" class="form-select form-select-sm">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
 
+            <div class="col-md-3 mb-2">
+                <label asp-for="LentTo" class="form-label">Lent To</label>
+                <input asp-for="LentTo" class="form-control form-control-sm" />
+            </div>
+
+            <div class="col-md-3 mb-2">
+                <label asp-for="Notes" class="form-label">Notes</label>
+                <input asp-for="Notes" class="form-control form-control-sm" maxlength="25" />
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            <a asp-controller="Home" asp-action="Collection" class="btn btn-secondary btn-sm">Cancel</a>
+        </div>
+    </form>
+</div>
