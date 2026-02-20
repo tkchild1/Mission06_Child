@@ -10,25 +10,29 @@ namespace Mission06_Child.Controllers
     {
 
         private MovieContext _context;
-        public HomeController(MovieContext temp) // Constructor
+        // Constructor - injects database context
+        public HomeController(MovieContext temp) 
         {
             _context = temp;
         }
+        // Display home page
         public IActionResult Index()
         {
             return View();
         }
-
+        // Display "Get to Know Joel" page
         public IActionResult AllAbout()
         {
             return View();
         }
+        // GET: Display form to add a new movie
         [HttpGet]
         public IActionResult MovieSubmission()
         {
             ViewBag.Categories = _context.Categories.ToList();
             return View("MovieSubmission", new Movie());
         }
+        // POST: Save new movie to database
         [HttpPost]
         public IActionResult MovieSubmission(Movie response)
         {
@@ -44,6 +48,7 @@ namespace Mission06_Child.Controllers
                 return View("MovieSubmission", response);
             }
         }
+        // Display all movies in collection
         public IActionResult Collection()
         {
             var app = _context.Movies
@@ -52,7 +57,7 @@ namespace Mission06_Child.Controllers
             .ToList();
             return View(app);
         }
-
+        // GET: Load movie data for editing
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -61,6 +66,7 @@ namespace Mission06_Child.Controllers
             ViewBag.Categories = _context.Categories.OrderBy(x => x.CategoryName).ToList();
             return View("MovieSubmission", recordToEdit);
         }
+        // POST: Save edited movie to database
         [HttpPost]
         public IActionResult Edit(Movie updatedInfo)
         {
@@ -76,7 +82,7 @@ namespace Mission06_Child.Controllers
                 return View("MovieSubmission", updatedInfo);
             }
         }
-
+        // GET: Display confirmation page before deleting
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -84,6 +90,7 @@ namespace Mission06_Child.Controllers
                 .Single(x => x.MovieId == id);
             return View(recordToDelete);
         }
+        // POST: Remove movie from database
         [HttpPost]
         public IActionResult Delete(Movie application)
         {

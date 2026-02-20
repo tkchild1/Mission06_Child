@@ -8,14 +8,15 @@ namespace Mission06_Child.Models
             : base(options)
         {
         }
+        // Movies table
         public DbSet<Movie> Movies { get; set; }
+        // Categories table
         public DbSet<Category> Categories { get; set; }
-
+        // Configure relationships between tables
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Don't seed anything - the database already has the data!
 
-            // Just configure the relationship
+            // Set up foreign key relationship between Movies and Categories
             modelBuilder.Entity<Movie>()
                 .HasOne(m => m.Category)
                 .WithMany(c => c.Movies)
